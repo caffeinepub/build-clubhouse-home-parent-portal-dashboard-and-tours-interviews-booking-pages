@@ -1,269 +1,52 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Clubhouse Home, Parent Portal Dashboard, and Tours & Interviews Booking (Frontend)",
+  "title": "Update Clubhouse hero image and apply colorful handprints app background",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Establish a cohesive, family-friendly “interactive digital playground” visual theme (warm sunny palette, rounded bubbles, star/butterfly accents, consistent typography/spacing).",
+      "summary": "Replace the Clubhouse home page hero image with the new static “Cool Kidz Club” artwork asset while keeping it responsive inside the rounded container.",
       "acceptanceCriteria": [
-        "All three pages share the same design language (rounded bubble containers, consistent palette, consistent typography).",
-        "Primary palette is not predominantly blue/purple.",
-        "Star/butterfly decorative elements appear in a consistent style across pages."
+        "The homepage hero image on the Clubhouse home page displays the new “Cool Kidz Club” artwork instead of the current /assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png image.",
+        "The hero image is loaded from a static file in the frontend (not via backend).",
+        "The hero image remains responsive and does not overflow its rounded container."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg",
           "operation": "create",
-          "description": "Create global styling foundation (warm sunny palette tokens via CSS variables, typography defaults, spacing rhythm, reusable “bubble container” utility classes). Ensure the primary scheme is not predominantly blue/purple."
+          "description": "Add the converted/cropped wide hero asset for the uploaded “Cool Kidz Club” artwork as a static public asset (per imageRequirements edit output filename)."
         },
         {
-          "path": "frontend/tailwind.config.js",
+          "path": "frontend/src/pages/ClubhouseHomePage.tsx",
           "operation": "modify",
-          "description": "Align Tailwind theme extension with the warm sunny palette (map primary/secondary/accent to warm tones) and increase default border radius for bubble-like UI surfaces."
-        },
-        {
-          "path": "frontend/src/components/PlaygroundDecor.tsx",
-          "operation": "create",
-          "description": "Add a small decorative helper component to place consistent star/butterfly ‘sticker’ accents (positioned, non-interactive) around sections without blocking usability."
-        },
-        {
-          "path": "frontend/src/components/BubbleCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable rounded ‘bubble’ container component (shadow, border, padding) used across Home, Parent Portal, and Booking pages for consistent layout."
+          "description": "Update the hero <img> source to use the new static asset at frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg, replacing the prior generated sunny-park hero; ensure image sizing uses container-safe responsive styles (e.g., cover/contain as appropriate) so it does not overflow the rounded/overflow-hidden hero frame."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Implement the Clubhouse Home page with a sunny-park hero and a giant “Join the Club” primary CTA.",
+      "summary": "Add the static “colorful handprints” image and apply it as the app-wide background (main shell/pages) with an overlay so foreground content remains readable and performance stays smooth.",
       "acceptanceCriteria": [
-        "Home page includes a hero image visually resembling a sunny park.",
-        "The primary CTA is labeled exactly “Join the Club” and is visually dominant on the page.",
-        "Home page uses rounded bubble containers and star accents in the layout."
+        "All primary pages (Home, Parent Portal, Tours) show the colorful handprints background behind the main content.",
+        "Text, buttons, and BubbleCard content maintain good readability over the background (e.g., via opacity/overlay or other styling adjustments).",
+        "Background rendering performs well (no obvious jank) and scales appropriately on mobile and desktop."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ClubhouseHomePage.tsx",
+          "path": "frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png",
           "operation": "create",
-          "description": "Create the Clubhouse Home page layout: hero section rendering the sunny park image, bubble-like content sections, star accents, and a visually dominant primary button labeled exactly “Join the Club”."
+          "description": "Add the background-ready “colorful handprints” static asset (per imageRequirements edit output filename) under public generated assets for fast loading and caching."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Wire the Clubhouse Home route and ensure navigation can reach it from the UI (header links/buttons)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Add routing and visible navigation so users can reach Home, Parent Portal Dashboard, and Tours & Interviews Booking from the UI.",
-      "acceptanceCriteria": [
-        "There are working routes/pages for Home, Parent Portal, and Tours & Interviews.",
-        "Users can navigate between all three pages via visible UI navigation (e.g., header buttons/links)."
-      ],
-      "file_operations": [
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Introduce app-wide background styling that uses frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png behind content with a readability-preserving overlay (e.g., layered backgrounds or a semi-transparent wash) and mobile/desktop-friendly scaling/repeat behavior; keep changes in this existing global stylesheet entry point."
+        },
         {
           "path": "frontend/src/components/AppShell.tsx",
-          "operation": "create",
-          "description": "Create an app shell with a playful header/navigation that links to Clubhouse Home, Parent Portal, and Tours & Interviews Booking; keep styling consistent with the bubble theme."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add route definitions for the three pages and wrap them in the AppShell so navigation is visible on all pages."
-        },
-        {
-          "path": "frontend/src/pages/ParentPortalPage.tsx",
-          "operation": "create",
-          "description": "Create the Parent Portal page component and ensure it is registered with routing (content gated per REQ-5)."
-        },
-        {
-          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
-          "operation": "create",
-          "description": "Create the Tours & Interviews booking page component and ensure it is registered with routing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Build the Parent Portal Dashboard UI with a VIP feel: nanny cam centerpiece with playful frame plus Nap/Snack/Play quick-glance widgets populated from backend data (or clear placeholder).",
-      "acceptanceCriteria": [
-        "Dashboard visually emphasizes the nanny cam area as the main focal element and includes a playful frame/border around it.",
-        "Dashboard includes three distinct quick-glance status widgets labeled exactly “Nap”, “Snack”, and “Play”.",
-        "Backend provides an API to read the current values/timestamps for Nap/Snack/Play statuses and the nanny cam media URL (or placeholder).",
-        "Frontend fetches and displays statuses from the backend and shows a nanny cam area (real URL if configured, otherwise a clear placeholder)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ParentPortalPage.tsx",
-          "operation": "modify",
-          "description": "Implement the VIP Lounge dashboard layout: large nanny cam area as the focal point, render the fun frame graphic around it, and show three distinct status widgets labeled exactly “Nap”, “Snack”, and “Play”. Include a clear placeholder state for the nanny cam if no media URL is configured/available."
-        },
-        {
-          "path": "frontend/src/components/NannyCamFrame.tsx",
-          "operation": "create",
-          "description": "Create a presentational component that wraps an embedded media area with the generated fun frame graphic while keeping the feed area non-clinical and playful."
-        },
-        {
-          "path": "frontend/src/components/StatusWidgets.tsx",
-          "operation": "create",
-          "description": "Create a component to render the quick-glance ‘Nap’, ‘Snack’, and ‘Play’ widgets, including use of the generated status icons image and display fields for values/timestamps."
-        },
-        {
-          "path": "frontend/src/hooks/useParentPortalStatus.ts",
-          "operation": "create",
-          "description": "Add a React Query hook that uses the existing actor (via useActor) to retrieve nanny-cam/status data once the backend capability exists; until then, return a stable placeholder model so the UI remains functional."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Require Internet Identity sign-in before viewing Parent Portal and show a friendly signed-out state; do not edit immutable Internet Identity hook files.",
-      "acceptanceCriteria": [
-        "Attempting to access the Parent Portal while signed out displays a sign-in prompt and does not display portal content.",
-        "After signing in with Internet Identity, the Parent Portal page becomes accessible.",
-        "No edits are made to immutable Internet Identity hook files; authentication is composed using existing hooks/components."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/RequireAuth.tsx",
-          "operation": "create",
-          "description": "Create an auth guard wrapper that checks authentication via the existing useInternetIdentity hook and conditionally renders either (a) a friendly sign-in prompt or (b) the protected Parent Portal content. Use the selected ‘authorization’ component’s frontend guidance for composing authentication state. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/AuthPanel.tsx",
-          "operation": "create",
-          "description": "Create a friendly, on-brand sign-in panel (warm palette, bubble container) with a button that triggers Internet Identity login/logout using the existing useInternetIdentity hook. Use the selected ‘authorization’ component’s frontend guidance for login/logout and clearing cached data with React Query. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/ParentPortalPage.tsx",
-          "operation": "modify",
-          "description": "Wrap the dashboard content in RequireAuth so signed-out users see only the sign-in state and not the portal content."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Ensure the Parent Portal route uses the auth guard so the access-control flow applies when navigating directly via URL or via header navigation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Implement Tours & Interviews Booking page with calendar UI, adjacent “Meet Auntie Maia” media area, and star/butterfly sticker decorations.",
-      "acceptanceCriteria": [
-        "Booking page includes a calendar-style scheduling UI.",
-        "A “Meet Auntie Maia” media area (photo or video) is displayed adjacent to the calendar on desktop widths and stacks sensibly on mobile.",
-        "Decorative star/butterfly sticker visuals appear around the calendar area without obstructing usability."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
-          "operation": "modify",
-          "description": "Build the booking page layout with a responsive two-column arrangement (calendar left, ‘Meet Auntie Maia’ media right on desktop; stacked on mobile). Add sticker-style star/butterfly decorations around the calendar region without blocking interactions."
-        },
-        {
-          "path": "frontend/src/components/BookingCalendar.tsx",
-          "operation": "create",
-          "description": "Create a calendar-style scheduling component that supports selecting a date/time and emitting a requested time value for submission."
-        },
-        {
-          "path": "frontend/src/components/MeetAuntieMaiaPanel.tsx",
-          "operation": "create",
-          "description": "Create the ‘Meet Auntie Maia’ media panel that renders the generated portrait asset and optional video placeholder area, styled consistently with bubble containers."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Enable booking request submission and listing from the booking page; show a clear confirmation state after submit.",
-      "acceptanceCriteria": [
-        "Backend exposes methods to create a booking request and list booking requests for the signed-in user (by Principal).",
-        "Frontend can submit a booking request from the calendar UI and shows a clear confirmation after successful submission.",
-        "Booking requests persist in canister state and are retrievable on refresh."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useBookingRequests.ts",
-          "operation": "create",
-          "description": "Create React Query hooks for (1) creating a booking request and (2) listing booking requests using the existing actor (via useActor). Prefer showing only the current user’s items in the UI (filter client-side using identity principal if needed) while relying on backend authorization for correctness."
-        },
-        {
-          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
-          "operation": "modify",
-          "description": "Wire the BookingCalendar selection into a submit action that calls the booking-create capability and then shows a clear confirmation state; also render a ‘Your requests’ list sourced from the list capability and refresh it after submission and on reload."
-        },
-        {
-          "path": "frontend/src/components/BookingConfirmation.tsx",
-          "operation": "create",
-          "description": "Add a small confirmation component/state UI that clearly indicates a booking request was submitted successfully and summarizes the selected date/time and details."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Add generated images as static frontend assets and render them on the Home, Parent Portal, and Booking pages (hero, stickers, frame, icons, and Auntie Maia portrait).",
-      "acceptanceCriteria": [
-        "All generated images are stored under frontend/public/assets/generated.",
-        "Home page uses the generated sunny park hero image.",
-        "Parent Portal uses the generated fun frame around the nanny cam area.",
-        "Booking page uses the generated sticker assets around the calendar area."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png",
-          "operation": "create",
-          "description": "Add the generated sunny park hero illustration as a static asset at the required path."
-        },
-        {
-          "path": "frontend/public/assets/generated/stickers-stars-set.dim_1024x1024.png",
-          "operation": "create",
-          "description": "Add the generated star sticker set as a static asset at the required path."
-        },
-        {
-          "path": "frontend/public/assets/generated/stickers-butterflies-set.dim_1024x1024.png",
-          "operation": "create",
-          "description": "Add the generated butterfly sticker set as a static asset at the required path."
-        },
-        {
-          "path": "frontend/public/assets/generated/nanny-cam-fun-frame.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the generated fun rounded frame border graphic as a static asset at the required path."
-        },
-        {
-          "path": "frontend/public/assets/generated/status-icons-nap-snack-play.dim_768x256.png",
-          "operation": "create",
-          "description": "Add the generated quick-glance status icons strip as a static asset at the required path."
-        },
-        {
-          "path": "frontend/public/assets/generated/meet-auntie-maia-portrait.dim_800x800.png",
-          "operation": "create",
-          "description": "Add the generated ‘Auntie Maia’ portrait placeholder as a static asset at the required path."
-        },
-        {
-          "path": "frontend/src/pages/ClubhouseHomePage.tsx",
-          "operation": "modify",
-          "description": "Render the generated hero image from frontend/public/assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png within the hero section."
-        },
-        {
-          "path": "frontend/src/components/NannyCamFrame.tsx",
-          "operation": "modify",
-          "description": "Use frontend/public/assets/generated/nanny-cam-fun-frame.dim_1200x800.png to visually frame the nanny cam area."
-        },
-        {
-          "path": "frontend/src/components/StatusWidgets.tsx",
-          "operation": "modify",
-          "description": "Use frontend/public/assets/generated/status-icons-nap-snack-play.dim_768x256.png to visually support the ‘Nap’, ‘Snack’, and ‘Play’ widgets."
-        },
-        {
-          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
-          "operation": "modify",
-          "description": "Place decorative stickers around the calendar region using frontend/public/assets/generated/stickers-stars-set.dim_1024x1024.png and frontend/public/assets/generated/stickers-butterflies-set.dim_1024x1024.png without obstructing usability."
-        },
-        {
-          "path": "frontend/src/components/MeetAuntieMaiaPanel.tsx",
-          "operation": "modify",
-          "description": "Render the ‘Meet Auntie Maia’ portrait using frontend/public/assets/generated/meet-auntie-maia-portrait.dim_800x800.png."
+          "description": "Apply a wrapper class/structure on the main app shell container to render the handprints background behind all routed pages (Home, Parent Portal, Tours) while keeping the header/footer and main content readable (e.g., by enabling the global overlay/background styles via className)."
         }
       ]
     }

@@ -17,7 +17,7 @@ export default function AppShell({ children }: AppShellProps) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col app-with-handprints-bg">
       <header className="sticky top-0 z-50 w-full border-b-4 border-primary/20 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-bubble">
         <div className="container flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 group">

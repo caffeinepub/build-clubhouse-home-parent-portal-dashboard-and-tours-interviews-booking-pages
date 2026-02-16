@@ -80,4 +80,34 @@
     .sticker-decor {
         @apply pointer-events-none select-none;
     }
+
+    /* Colorful handprints background */
+    .app-with-handprints-bg {
+        position: relative;
+    }
+
+    .app-with-handprints-bg::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/generated/colorful-handprints-bg.dim_2048x2048.png');
+        background-size: 600px 600px;
+        background-repeat: repeat;
+        background-position: center;
+        opacity: 0.12;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .dark .app-with-handprints-bg::before {
+        opacity: 0.08;
+    }
+
+    /* Ensure content remains readable over background */
+    .app-with-handprints-bg > * {
+        position: relative;
+    }
 }

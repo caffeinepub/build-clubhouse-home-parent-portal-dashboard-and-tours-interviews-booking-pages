@@ -1,73 +1,58 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T18:06:21.808Z",
-  "summary": "Routing/navigation, Home page hero + “Join the Club” CTA, booking request backend methods, and several reusable UI components (bubble cards, decor stickers, nanny cam frame, auth gate) were added. However, the Parent Portal status/nanny-cam data is still stubbed on the frontend and there is no evidence of a backend API for those statuses/URL. The diff also introduces additional backend features (user profiles, booking admin/status updates, authorization initialization) that were not requested.",
+  "generatedAt": "2026-02-16T03:10:23.764Z",
+  "summary": "REQ-1 and REQ-2 are partially implemented via code/styling updates (new hero image path used on the homepage; app-wide background class and CSS pseudo-element added). However, the diff shows no new static asset files added, so the requirement to add the uploaded images as frontend static assets is not evidenced. Several additional unrequested visual/theme changes were also introduced (palette/animations/nav styling).",
   "missing_requirements": [
     {
-      "id": "REQ-4",
-      "requirement": "Backend provides an API to read the current values/timestamps for Nap/Snack/Play statuses and the nanny cam media URL (or placeholder), and frontend fetches and displays them from the backend.",
-      "reason": "The frontend hook explicitly returns placeholder data and states it is waiting for backend implementation; the shown backend code implements bookings and user profiles but shows no status/nanny-cam read API in the provided (truncated) portion.",
+      "id": "REQ-1",
+      "requirement": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
+      "reason": "The homepage hero image reference was updated to the new file path, but the diff shows no added asset file; requirement explicitly includes adding the uploaded image as a static frontend asset.",
       "evidence": [
-        "frontend/src/hooks/useParentPortalStatus.ts",
-        "backend/main.mo"
+        "File diff summary: \"Added: 0\"",
+        "frontend/src/pages/ClubhouseHomePage.tsx (img src=\"/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg\")"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
+      "reason": "Background styling references the new image path and is applied via AppShell, but the diff shows no added asset file; requirement explicitly includes adding the uploaded image as a static frontend asset.",
+      "evidence": [
+        "File diff summary: \"Added: 0\"",
+        "frontend/src/index.css (background-image: url('/assets/generated/colorful-handprints-bg.dim_2048x2048.png'))",
+        "frontend/src/components/AppShell.tsx (className includes \"app-with-handprints-bg\")"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "User profile management APIs (save/get user profiles) with authorization checks.",
-      "reason": "BuildRequest does not ask for user profile CRUD; it only requests Parent Portal status/nanny-cam and booking request creation/listing.",
+      "description": "Global theme/palette changes (\"Warm sunny palette\") beyond the requested hero/background image swap.",
+      "reason": "The BuildRequest is for frontend-only asset/styling changes specific to hero image and background; it does not request a broader color system overhaul.",
       "evidence": [
-        "backend/main.mo"
+        "frontend/src/index.css (multiple CSS variables changed for background/foreground/card/primary/secondary/accent, etc.)"
       ]
     },
     {
-      "description": "Admin/authorization framework and secret-token based initialization for access control.",
-      "reason": "BuildRequest constraints mention staying single-canister and using Internet Identity for access to Parent Portal, but do not request an admin-token initialization flow or custom access-control module integration.",
+      "description": "New custom utility styles for \"bubble\" containers and borders not explicitly requested.",
+      "reason": "REQ-1/REQ-2 focus on images (hero + background) and readability; adding new generic component styling utilities is not requested.",
       "evidence": [
-        "backend/main.mo",
-        "frontend/src/hooks/useActor.ts"
+        "frontend/src/index.css (@layer utilities: .bubble-container, .bubble-sm)"
       ]
     },
     {
-      "description": "Additional booking features beyond create/list (e.g., get booking by id, list all bookings with admin visibility, booking status updates).",
-      "reason": "REQ-7 only requires create booking request and list booking requests for the signed-in user; extra admin/list-all/get-by-id/update-status functionality was not requested.",
+      "description": "Navigation/header styling changes (bubble-styled links, sticky header visual changes) not requested.",
+      "reason": "Non-goals specify not changing routing/navigation labels beyond what is necessary to place new images; while labels appear unchanged, substantial nav styling changes are outside the stated scope.",
       "evidence": [
-        "backend/main.mo"
+        "frontend/src/components/AppShell.tsx (header/nav link classes changed; sticky header with backdrop blur, shadows, rounded buttons)"
       ]
     }
   ],
-  "confidence": 0.72,
+  "confidence": 0.74,
   "changed_files": [
-    "all_files_summary.json",
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
     "frontend/src/components/AppShell.tsx",
-    "frontend/src/components/AuthPanel.tsx",
-    "frontend/src/components/BookingCalendar.tsx",
-    "frontend/src/components/BookingConfirmation.tsx",
-    "frontend/src/components/BubbleCard.tsx",
-    "frontend/src/components/MeetAuntieMaiaPanel.tsx",
-    "frontend/src/components/NannyCamFrame.tsx",
-    "frontend/src/components/PlaygroundDecor.tsx",
-    "frontend/src/components/RequireAuth.tsx",
-    "frontend/src/components/StatusWidgets.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useBookingRequests.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useParentPortalStatus.ts",
-    "frontend/src/hooks/useQueries.ts",
     "frontend/src/index.css",
-    "frontend/src/main.tsx",
     "frontend/src/pages/ClubhouseHomePage.tsx",
-    "frontend/src/pages/ParentPortalPage.tsx",
-    "frontend/src/pages/ToursInterviewsBookingPage.tsx",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

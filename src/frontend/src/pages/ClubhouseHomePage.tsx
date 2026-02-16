@@ -66,9 +66,9 @@ export default function ClubhouseHomePage() {
             <div className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl border-8 border-primary/20">
                 <img
-                  src="/assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png"
-                  alt="Sunny park playground"
-                  className="w-full h-auto"
+                  src="/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg"
+                  alt="Auntie Maia's Cool Kidz Club"
+                  className="w-full h-auto object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 animate-bounce">

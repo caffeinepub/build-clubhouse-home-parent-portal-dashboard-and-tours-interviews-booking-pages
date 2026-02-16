@@ -1,180 +1,70 @@
 {
   "kind": "build_request",
-  "title": "Build Clubhouse Home, Parent Portal Dashboard, and Tours & Interviews Booking Pages",
+  "title": "Update homepage hero image and apply colorful handprints background",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Create a cohesive, playful visual theme across the app that matches a family-friendly “interactive digital playground” brand: rounded bubble-like containers, warm sunny palette (avoid blue/purple as the primary scheme), playful star/butterfly accents, and consistent typography and spacing.",
+      "text": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Concept 1: The \"Clubhouse\" Home Page\n * The Vibe: An interactive digital playground.\n * Key Feature: A giant \"Join the Club\" button instead of a boring \"Book Now.\"\n * Visual Style: Rounded \"bubble\" containers, playful star accents from her logo, and a hero image that looks like a sunny park.\nConcept 2: The \"Parent Portal\" Dashboard\n * The Vibe: Secure but still vibrant. It should feel like a \"VIP Lounge\" for parents.\n * Key Feature: The Nanny Cam takes center stage here, framed with a fun border so it doesn't look like a clinical security feed.\n * Layout: Quick-glance icons for \"Nap,\" \"Snack,\" and \"Play\" so busy parents can see status updates instantly.\nConcept 3: The \"Tours & Interviews\" Booking Page\n * The Vibe: Low pressure, high excitement.\n * Key Feature: A \"Meet Auntie Maia\" video or photo area next to the calendar.\n * Visual Style: We’ll use the butterflies and stars from her logo as \"stickers\" scattered around the booking calendar to make the scheduling process feel less like a chore.\""
+          "Use the cool kids club as the homepage hero image"
         ]
       },
       "acceptanceCriteria": [
-        "All three pages share the same design language (rounded bubble containers, consistent palette, consistent typography).",
-        "Primary palette is not predominantly blue/purple.",
-        "Star/butterfly decorative elements appear in a consistent style across pages."
+        "The homepage hero image on the Clubhouse home page displays the new “Cool Kidz Club” artwork instead of the current /assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png image.",
+        "The hero image is loaded from a static file in the frontend (not via backend).",
+        "The hero image remains responsive and does not overflow its rounded container."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement the “Clubhouse” Home page with a sunny-park hero section and a prominent, giant “Join the Club” call-to-action button as the primary interaction.",
+      "text": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Concept 1: The \"Clubhouse\" Home Page\n * The Vibe: An interactive digital playground.\n * Key Feature: A giant \"Join the Club\" button instead of a boring \"Book Now.\"\n * Visual Style: Rounded \"bubble\" containers, playful star accents from her logo, and a hero image that looks like a sunny park."
+          "make the colorful handprints the backgrounds"
         ]
       },
       "acceptanceCriteria": [
-        "Home page includes a hero image visually resembling a sunny park.",
-        "The primary CTA is labeled exactly “Join the Club” and is visually dominant on the page.",
-        "Home page uses rounded bubble containers and star accents in the layout."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Create navigation/routing so users can reach the three experiences: Clubhouse Home, Parent Portal Dashboard, and Tours & Interviews Booking page from the UI.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Concept 1: The \"Clubhouse\" Home Page",
-          "Concept 2: The \"Parent Portal\" Dashboard",
-          "Concept 3: The \"Tours & Interviews\" Booking Page"
-        ]
-      },
-      "acceptanceCriteria": [
-        "There are working routes/pages for Home, Parent Portal, and Tours & Interviews.",
-        "Users can navigate between all three pages via visible UI navigation (e.g., header buttons/links)."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Implement the “Parent Portal” Dashboard with a secure “VIP Lounge” feel, featuring a nanny cam feed/video area as the centerpiece with a playful, non-clinical frame/border, plus quick-glance status widgets/icons for “Nap”, “Snack”, and “Play”.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Concept 2: The \"Parent Portal\" Dashboard\n * The Vibe: Secure but still vibrant. It should feel like a \"VIP Lounge\" for parents.\n * Key Feature: The Nanny Cam takes center stage here, framed with a fun border so it doesn't look like a clinical security feed.\n * Layout: Quick-glance icons for \"Nap,\" \"Snack,\" and \"Play\" so busy parents can see status updates instantly."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Dashboard visually emphasizes the nanny cam area as the main focal element and includes a playful frame/border around it.",
-        "Dashboard includes three distinct quick-glance status widgets labeled exactly “Nap”, “Snack”, and “Play”.",
-        "Backend provides an API to read the current values/timestamps for Nap/Snack/Play statuses and the nanny cam media URL (or placeholder).",
-        "Frontend fetches and displays statuses from the backend and shows a nanny cam area (real URL if configured, otherwise a clear placeholder)."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Add a minimal access-control flow for the Parent Portal so it feels “secure”: require Internet Identity sign-in before viewing the dashboard, and show a friendly sign-in screen/state when not authenticated.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Concept 2: The \"Parent Portal\" Dashboard\n * The Vibe: Secure but still vibrant. It should feel like a \"VIP Lounge\" for parents."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Attempting to access the Parent Portal while signed out displays a sign-in prompt and does not display portal content.",
-        "After signing in with Internet Identity, the Parent Portal page becomes accessible.",
-        "No edits are made to immutable Internet Identity hook files; authentication is composed using existing hooks/components."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Implement the “Tours & Interviews” Booking page with a low-pressure, exciting feel: include a booking calendar UI and a “Meet Auntie Maia” photo/video area placed next to the calendar, with star/butterfly sticker-style decorations around the calendar region.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Concept 3: The \"Tours & Interviews\" Booking Page\n * The Vibe: Low pressure, high excitement.\n * Key Feature: A \"Meet Auntie Maia\" video or photo area next to the calendar.\n * Visual Style: We’ll use the butterflies and stars from her logo as \"stickers\" scattered around the booking calendar to make the scheduling process feel less like a chore.\""
-        ]
-      },
-      "acceptanceCriteria": [
-        "Booking page includes a calendar-style scheduling UI.",
-        "A “Meet Auntie Maia” media area (photo or video) is displayed adjacent to the calendar on desktop widths and stacks sensibly on mobile.",
-        "Decorative star/butterfly sticker visuals appear around the calendar area without obstructing usability."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Add backend support for creating and listing booking requests from the Tours & Interviews page (e.g., select date/time and submit), and display a confirmation state in the UI after submission.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Concept 3: The \"Tours & Interviews\" Booking Page"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend exposes methods to create a booking request and list booking requests for the signed-in user (by Principal).",
-        "Frontend can submit a booking request from the calendar UI and shows a clear confirmation after successful submission.",
-        "Booking requests persist in canister state and are retrievable on refresh."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Place generated image assets in the frontend as static files and render them on the appropriate pages (hero image on Home; stickers and frames on Parent Portal and Booking page).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "hero image that looks like a sunny park",
-          "playful star accents from her logo",
-          "butterflies and stars from her logo as \"stickers\"",
-          "framed with a fun border"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All generated images are stored under frontend/public/assets/generated.",
-        "Home page uses the generated sunny park hero image.",
-        "Parent Portal uses the generated fun frame around the nanny cam area.",
-        "Booking page uses the generated sticker assets around the calendar area."
+        "All primary pages (Home, Parent Portal, Tours) show the colorful handprints background behind the main content.",
+        "Text, buttons, and BubbleCard content maintain good readability over the background (e.g., via opacity/overlay or other styling adjustments).",
+        "Background rendering performs well (no obvious jank) and scales appropriately on mobile and desktop."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor (no multi-canister backend).",
     "Do not edit files under frontend/src/components/ui (compose them instead).",
-    "Do not edit immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx.",
-    "Use English for all user-facing UI text."
+    "Do not modify any paths listed as immutable in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui).",
+    "Keep backend behavior unchanged; this request is frontend-only asset/styling changes."
   ],
   "nonGoals": [
-    "Implementing real-time streaming/video infrastructure for the nanny cam (use a configurable URL/embed or placeholder).",
-    "Integrating third-party auth providers other than Internet Identity.",
-    "Payments, subscriptions, or online checkout flows.",
-    "Email/SMS notifications for bookings."
+    "Do not change routing, navigation labels, or page copy beyond what is necessary to place the new images.",
+    "Do not implement new backend endpoints or data models for image delivery.",
+    "Do not remove or redesign existing sticker/decoration systems (stars/butterflies) unless required for readability with the new background."
   ],
   "imageRequirements": {
-    "required": [
-      "Sunny park hero illustration with soft warm lighting, playful shapes, and space for foreground UI (clubhouse-hero-sunny-park.dim_1600x900.png)",
-      "Set of playful star sticker illustrations (varied sizes, warm colors) (stickers-stars-set.dim_1024x1024.png)",
-      "Set of playful butterfly sticker illustrations (varied sizes, warm colors) (stickers-butterflies-set.dim_1024x1024.png)",
-      "Fun rounded “frame” border graphic suitable for wrapping a video/feed area (nanny-cam-fun-frame.dim_1200x800.png)",
-      "Set of quick-glance icons in a consistent bubbly style: nap, snack, play (status-icons-nap-snack-play.dim_768x256.png)",
-      "Portrait-style photo/illustration placeholder of “Auntie Maia” in a warm friendly style (meet-auntie-maia-portrait.dim_800x800.png)"
-    ],
-    "edits": []
+    "required": [],
+    "edits": [
+      "Convert and crop the uploaded Cool Kidz Club artwork for a wide hero format (629b7279fe312b0b9b003637c585582c.jpeg > cool-kidz-club-hero.dim_1600x900.jpg)",
+      "Create a background-ready version of the colorful handprints (crop/clean as needed and make it suitable for repeating/cover) (e3f87be54e3bc03ffd5c0ec55ecb5542.jpeg > colorful-handprints-bg.dim_2048x2048.png)"
+    ]
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }
