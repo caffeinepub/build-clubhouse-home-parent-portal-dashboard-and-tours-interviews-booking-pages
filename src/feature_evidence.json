@@ -1,0 +1,178 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-cohesive-playful-visual-theme-across-the-app-that-matches-a-family-friendly-interactive-digital-playground-brand-rounded-bubble-like-containers-warm-sunny-palette-avoid-blue-purple-as-the-primary-scheme-playful-star-butterfly-accents-and-consistent-typography-and-spacing",
+      "featureTitle": "Create a cohesive, playful visual theme across the app that matches a family-friendly “interactive digital playground” brand: rounded bubble-like containers, warm sunny palette (avoid blue/purple as the primary scheme), playful star/butterfly accents, and consistent typography and spacing.",
+      "files": [
+        "frontend/src/components/BubbleCard.tsx",
+        "frontend/src/components/PlaygroundDecor.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-clubhouse-home-page-with-a-sunny-park-hero-section-and-a-prominent-giant-join-the-club-call-to-action-button-as-the-primary-interaction",
+      "featureTitle": "Implement the “Clubhouse” Home page with a sunny-park hero section and a prominent, giant “Join the Club” call-to-action button as the primary interaction.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/ClubhouseHomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-navigation-routing-so-users-can-reach-the-three-experiences-clubhouse-home-parent-portal-dashboard-and-tours-interviews-booking-page-from-the-ui",
+      "featureTitle": "Create navigation/routing so users can reach the three experiences: Clubhouse Home, Parent Portal Dashboard, and Tours & Interviews Booking page from the UI.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppShell.tsx",
+        "frontend/src/pages/ParentPortalPage.tsx",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-parent-portal-dashboard-with-a-secure-vip-lounge-feel-featuring-a-nanny-cam-feed-video-area-as-the-centerpiece-with-a-playful-non-clinical-frame-border-plus-quick-glance-status-widgets-icons-for-nap-snack-and-play",
+      "featureTitle": "Implement the “Parent Portal” Dashboard with a secure “VIP Lounge” feel, featuring a nanny cam feed/video area as the centerpiece with a playful, non-clinical frame/border, plus quick-glance status widgets/icons for “Nap”, “Snack”, and “Play”.",
+      "files": [
+        "frontend/src/components/NannyCamFrame.tsx",
+        "frontend/src/components/StatusWidgets.tsx",
+        "frontend/src/hooks/useParentPortalStatus.ts",
+        "frontend/src/pages/ParentPortalPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-minimal-access-control-flow-for-the-parent-portal-so-it-feels-secure-require-internet-identity-sign-in-before-viewing-the-dashboard-and-show-a-friendly-sign-in-screen-state-when-not-authenticated",
+      "featureTitle": "Add a minimal access-control flow for the Parent Portal so it feels “secure”: require Internet Identity sign-in before viewing the dashboard, and show a friendly sign-in screen/state when not authenticated.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AuthPanel.tsx",
+        "frontend/src/components/RequireAuth.tsx",
+        "frontend/src/pages/ParentPortalPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-tours-interviews-booking-page-with-a-low-pressure-exciting-feel-include-a-booking-calendar-ui-and-a-meet-auntie-maia-photo-video-area-placed-next-to-the-calendar-with-star-butterfly-sticker-style-decorations-around-the-calendar-region",
+      "featureTitle": "Implement the “Tours & Interviews” Booking page with a low-pressure, exciting feel: include a booking calendar UI and a “Meet Auntie Maia” photo/video area placed next to the calendar, with star/butterfly sticker-style decorations around the calendar region.",
+      "files": [
+        "frontend/src/components/BookingCalendar.tsx",
+        "frontend/src/components/MeetAuntieMaiaPanel.tsx",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-backend-support-for-creating-and-listing-booking-requests-from-the-tours-interviews-page-e-g-select-date-time-and-submit-and-display-a-confirmation-state-in-the-ui-after-submission",
+      "featureTitle": "Add backend support for creating and listing booking requests from the Tours & Interviews page (e.g., select date/time and submit), and display a confirmation state in the UI after submission.",
+      "files": [
+        "frontend/src/components/BookingConfirmation.tsx",
+        "frontend/src/hooks/useBookingRequests.ts",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-place-generated-image-assets-in-the-frontend-as-static-files-and-render-them-on-the-appropriate-pages-hero-image-on-home-stickers-and-frames-on-parent-portal-and-booking-page",
+      "featureTitle": "Place generated image assets in the frontend as static files and render them on the appropriate pages (hero image on Home; stickers and frames on Parent Portal and Booking page).",
+      "files": [
+        "frontend/src/components/MeetAuntieMaiaPanel.tsx",
+        "frontend/src/components/NannyCamFrame.tsx",
+        "frontend/src/components/StatusWidgets.tsx",
+        "frontend/src/pages/ClubhouseHomePage.tsx",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

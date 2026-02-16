@@ -1,0 +1,73 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T18:06:21.808Z",
+  "summary": "Routing/navigation, Home page hero + “Join the Club” CTA, booking request backend methods, and several reusable UI components (bubble cards, decor stickers, nanny cam frame, auth gate) were added. However, the Parent Portal status/nanny-cam data is still stubbed on the frontend and there is no evidence of a backend API for those statuses/URL. The diff also introduces additional backend features (user profiles, booking admin/status updates, authorization initialization) that were not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Backend provides an API to read the current values/timestamps for Nap/Snack/Play statuses and the nanny cam media URL (or placeholder), and frontend fetches and displays them from the backend.",
+      "reason": "The frontend hook explicitly returns placeholder data and states it is waiting for backend implementation; the shown backend code implements bookings and user profiles but shows no status/nanny-cam read API in the provided (truncated) portion.",
+      "evidence": [
+        "frontend/src/hooks/useParentPortalStatus.ts",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile management APIs (save/get user profiles) with authorization checks.",
+      "reason": "BuildRequest does not ask for user profile CRUD; it only requests Parent Portal status/nanny-cam and booking request creation/listing.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Admin/authorization framework and secret-token based initialization for access control.",
+      "reason": "BuildRequest constraints mention staying single-canister and using Internet Identity for access to Parent Portal, but do not request an admin-token initialization flow or custom access-control module integration.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Additional booking features beyond create/list (e.g., get booking by id, list all bookings with admin visibility, booking status updates).",
+      "reason": "REQ-7 only requires create booking request and list booking requests for the signed-in user; extra admin/list-all/get-by-id/update-status functionality was not requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppShell.tsx",
+    "frontend/src/components/AuthPanel.tsx",
+    "frontend/src/components/BookingCalendar.tsx",
+    "frontend/src/components/BookingConfirmation.tsx",
+    "frontend/src/components/BubbleCard.tsx",
+    "frontend/src/components/MeetAuntieMaiaPanel.tsx",
+    "frontend/src/components/NannyCamFrame.tsx",
+    "frontend/src/components/PlaygroundDecor.tsx",
+    "frontend/src/components/RequireAuth.tsx",
+    "frontend/src/components/StatusWidgets.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBookingRequests.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useParentPortalStatus.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/ClubhouseHomePage.tsx",
+    "frontend/src/pages/ParentPortalPage.tsx",
+    "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
