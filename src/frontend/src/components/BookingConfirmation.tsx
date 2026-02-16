@@ -1,27 +1,30 @@
 import BubbleCard from './BubbleCard';
 import PlaygroundDecor from './PlaygroundDecor';
-import { CheckCircle, Calendar, X } from 'lucide-react';
+import { CheckCircle, Calendar, X, User, Mail } from 'lucide-react';
 
 interface BookingConfirmationProps {
   date: Date;
   details: string;
+  notes: string;
+  contact: { name: string; email: string };
   bookingId: bigint | null;
   onClose: () => void;
 }
 
-export default function BookingConfirmation({ date, details, bookingId, onClose }: BookingConfirmationProps) {
+export default function BookingConfirmation({ date, details, notes, contact, bookingId, onClose }: BookingConfirmationProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
       <BubbleCard size="lg" className="max-w-lg w-full relative animate-in fade-in zoom-in duration-300">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-secondary transition-colors"
+          aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="absolute -top-6 -right-6 animate-bounce">
-          <PlaygroundDecor type="stars" size="md" />
+          <PlaygroundDecor type="child-heart" size="md" />
         </div>
 
         <div className="text-center space-y-6 pt-4">
@@ -58,11 +61,34 @@ export default function BookingConfirmation({ date, details, bookingId, onClose 
                 </p>
               </div>
             </div>
+
+            {contact.name && (
+              <div className="flex items-start space-x-3 pt-3 border-t border-border">
+                <User className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">{contact.name}</p>
+                  {contact.email && (
+                    <p className="text-xs text-muted-foreground flex items-center mt-1">
+                      <Mail className="w-3 h-3 mr-1" />
+                      {contact.email}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
             {details && (
               <div className="pt-3 border-t border-border">
                 <p className="text-sm text-muted-foreground">{details}</p>
               </div>
             )}
+
+            {notes && (
+              <div className="pt-3 border-t border-border">
+                <p className="text-sm text-muted-foreground italic">{notes}</p>
+              </div>
+            )}
+
             {bookingId !== null && (
               <div className="pt-3 border-t border-border">
                 <p className="text-xs text-muted-foreground">

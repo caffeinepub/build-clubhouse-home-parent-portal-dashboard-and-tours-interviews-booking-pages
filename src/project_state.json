@@ -1,25 +1,52 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Edit Images\n- Convert and crop the uploaded Cool Kidz Club artwork for a wide hero format (629b7279fe312b0b9b003637c585582c.jpeg > cool-kidz-club-hero.dim_1600x900.jpg)\n- Create a background-ready version of the colorful handprints (crop/clean as needed and make it suitable for repeating/cover) (e3f87be54e3bc03ffd5c0ec55ecb5542.jpeg > colorful-handprints-bg.dim_2048x2048.png)",
+  "summary": "MVP for \"Auntie Maia\"; booking is for parent tours/enrollment interviews and is separate from the nanny-cam livestream. User requested implementing a functional booking flow.",
+  "architectural_notes": [
+    "Booking system (tours/enrollment interviews) is independent from the nanny-cam livestream; no linkage required by default."
+  ],
+  "known_issues": [
+    "Current MVP booking action/button is not wired up (no submission/confirmation/storage), so parents get no response when trying to book."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-add-the-uploaded-cool-kidz-club-image-as-a-static-frontend-asset-and-use-it-as-the-hero-image-on-the-clubhouse-home-page-replacing-the-current-hero-image",
-      "title": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
+      "id": "feature-require-internet-identity-sign-in-for-the-tours-interviews-booking-page-so-that-booking-submission-and-viewing-stored-requests-cannot-fail-silently-due-to-missing-authorization",
+      "title": "Require Internet Identity sign-in for the Tours/Interviews booking page so that booking submission and viewing stored requests cannot fail silently due to missing authorization.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-the-uploaded-colorful-handprints-image-as-a-static-frontend-asset-and-apply-it-as-the-background-across-the-app-at-least-for-the-main-app-shell-pages-ensuring-foreground-content-remains-readable",
-      "title": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
+      "id": "feature-fix-the-booking-confirmation-modal-so-it-reliably-appears-after-a-successful-submission-and-displays-the-correct-submitted-date-time-details-and-booking-id",
+      "title": "Fix the booking confirmation modal so it reliably appears after a successful submission and displays the correct submitted date/time, details, and booking ID.",
       "reqIds": [
         "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-simple-booking-details-form-that-collects-parent-contact-information-name-and-email-at-minimum-along-with-optional-notes-and-ensure-the-submitted-information-is-persisted-with-the-booking-request",
+      "title": "Add a simple booking details form that collects parent contact information (name and email at minimum) along with optional notes, and ensure the submitted information is persisted with the booking request.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-clear-user-facing-error-feedback-if-booking-submission-fails-e-g-network-authorization-issues-instead-of-only-logging-to-the-console",
+      "title": "Provide clear user-facing error feedback if booking submission fails (e.g., network/authorization issues), instead of only logging to the console.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-submitted-bookings-are-stored-and-viewable-from-the-ui-by-listing-the-signed-in-user-s-tour-requests-on-the-tours-page-and-keeping-the-list-up-to-date-after-creating-a-new-request",
+      "title": "Ensure submitted bookings are stored and viewable from the UI by listing the signed-in user's tour requests on the /tours page and keeping the list up-to-date after creating a new request.",
+      "reqIds": [
+        "REQ-5"
       ],
       "version": 1
     }
@@ -27,18 +54,13 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Set the 'Cool Kids Club' image as the homepage hero image",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Use the 'colorful handprints' image as the site/page background(s)",
+      "summary": "Implement booking flow for parent tours and enrollment interviews (form submission + confirmation + stored/viewable bookings for Auntie Maia)",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Update homepage hero image and apply colorful handprints background",
+  "gameProjectType": "none",
+  "projectName": "Auntie Maia",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

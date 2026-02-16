@@ -25,7 +25,7 @@ export default function AuthPanel() {
   return (
     <div className="container py-20 relative">
       <div className="absolute top-10 left-10 animate-float">
-        <PlaygroundDecor type="stars" size="md" />
+        <PlaygroundDecor type="child-heart" size="md" />
       </div>
       <div className="absolute bottom-10 right-10 animate-wiggle">
         <PlaygroundDecor type="butterflies" size="lg" />

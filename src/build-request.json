@@ -1,61 +1,116 @@
 {
   "kind": "build_request",
-  "title": "Update homepage hero image and apply colorful handprints background",
+  "title": "Implement functional tour/interview booking flow with auth, confirmation, and stored requests",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
+      "text": "Require Internet Identity sign-in for the Tours/Interviews booking page so that booking submission and viewing stored requests cannot fail silently due to missing authorization.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-5",
+          "msg-6"
         ],
         "quotes": [
-          "Use the cool kids club as the homepage hero image"
+          "What happens when a parent books? I get nothing when I try",
+          "Yes add booking flow"
         ]
       },
       "acceptanceCriteria": [
-        "The homepage hero image on the Clubhouse home page displays the new “Cool Kidz Club” artwork instead of the current /assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png image.",
-        "The hero image is loaded from a static file in the frontend (not via backend).",
-        "The hero image remains responsive and does not overflow its rounded container."
+        "Navigating to /tours while signed out shows the existing AuthPanel (via RequireAuth) instead of the booking UI.",
+        "When signed in, the booking UI is available and booking submission calls the backend successfully (no authorization trap)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
+      "text": "Fix the booking confirmation modal so it reliably appears after a successful submission and displays the correct submitted date/time, details, and booking ID.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-5",
+          "msg-6"
         ],
         "quotes": [
-          "make the colorful handprints the backgrounds"
+          "What happens when a parent books? I get nothing when I try",
+          "Yes add booking flow"
         ]
       },
       "acceptanceCriteria": [
-        "All primary pages (Home, Parent Portal, Tours) show the colorful handprints background behind the main content.",
-        "Text, buttons, and BubbleCard content maintain good readability over the background (e.g., via opacity/overlay or other styling adjustments).",
-        "Background rendering performs well (no obvious jank) and scales appropriately on mobile and desktop."
+        "After a successful booking submission, a confirmation modal is displayed without requiring any additional user action.",
+        "The modal shows the submitted date/time (not cleared/undefined), the submitted details, and the returned booking ID.",
+        "Closing the modal hides it and leaves the page in a ready state for another booking request."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a simple booking details form that collects parent contact information (name and email at minimum) along with optional notes, and ensure the submitted information is persisted with the booking request.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Yes add booking flow"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The /tours page includes inputs for parent name and parent email, plus the existing free-text notes field.",
+        "The submit button is disabled until required fields (date/time, name, email) are provided.",
+        "The backend persists the collected information with the booking request such that it is visible when listing bookings (e.g., in the 'Your Tour Requests' list)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Provide clear user-facing error feedback if booking submission fails (e.g., network/authorization issues), instead of only logging to the console.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "What happens when a parent books? I get nothing when I try"
+        ]
+      },
+      "acceptanceCriteria": [
+        "If booking submission fails, the UI displays an English error message on the page (or in a modal/alert area) explaining that the request could not be submitted.",
+        "While submission is pending, the existing loading state remains visible and prevents duplicate submissions."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Ensure submitted bookings are stored and viewable from the UI by listing the signed-in user's tour requests on the /tours page and keeping the list up-to-date after creating a new request.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Yes add booking flow"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After submitting a booking, the stored requests list updates to include the new request without a full page reload.",
+        "The list displays each request's requested date/time, submitted details/contact info, and status.",
+        "If there are no bookings, the page does not show an empty list block (or shows a clear empty state message)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (compose them instead).",
-    "Do not modify any paths listed as immutable in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui).",
-    "Keep backend behavior unchanged; this request is frontend-only asset/styling changes."
+    "Backend must remain a single Motoko actor in backend/main.mo.",
+    "Do not edit frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "All user-facing text added/changed must be in English.",
+    "Booking is for parent tours and enrollment interviews and must remain separate from the nanny cam livestream."
   ],
   "nonGoals": [
-    "Do not change routing, navigation labels, or page copy beyond what is necessary to place the new images.",
-    "Do not implement new backend endpoints or data models for image delivery.",
-    "Do not remove or redesign existing sticker/decoration systems (stars/butterflies) unless required for readability with the new background."
+    "Do not implement any connection between booking requests and nanny-cam access rules.",
+    "Do not add email/SMS notifications or external integrations when a booking is created.",
+    "Do not add third-party authentication providers (only Internet Identity).",
+    "Do not implement real-time updates (e.g., WebSockets)."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": [
-      "Convert and crop the uploaded Cool Kidz Club artwork for a wide hero format (629b7279fe312b0b9b003637c585582c.jpeg > cool-kidz-club-hero.dim_1600x900.jpg)",
-      "Create a background-ready version of the colorful handprints (crop/clean as needed and make it suitable for repeating/cover) (e3f87be54e3bc03ffd5c0ec55ecb5542.jpeg > colorful-handprints-bg.dim_2048x2048.png)"
-    ]
+    "edits": []
   },
   "userProfileUpdate": {
     "goalsToAdd": [],

@@ -10,9 +10,18 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface BookingInput {
+  'contact' : ParentContact,
+  'notes' : string,
+  'details' : string,
+  'requestedTime' : Time,
+}
+export interface ParentContact { 'name' : string, 'email' : string }
 export interface Request {
   'id' : bigint,
   'status' : Status,
+  'contact' : ParentContact,
+  'notes' : string,
   'timestamp' : Time,
   'details' : string,
   'requestedTime' : Time,
@@ -34,7 +43,7 @@ export type UserRole = { 'admin' : null } |
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
-  'createBookingRequest' : ActorMethod<[Time, string], bigint>,
+  'createBookingRequest' : ActorMethod<[BookingInput], bigint>,
   'getBookingById' : ActorMethod<[bigint], Request>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,

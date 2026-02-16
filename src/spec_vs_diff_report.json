@@ -1,58 +1,77 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-16T03:10:23.764Z",
-  "summary": "REQ-1 and REQ-2 are partially implemented via code/styling updates (new hero image path used on the homepage; app-wide background class and CSS pseudo-element added). However, the diff shows no new static asset files added, so the requirement to add the uploaded images as frontend static assets is not evidenced. Several additional unrequested visual/theme changes were also introduced (palette/animations/nav styling).",
+  "generatedAt": "2026-02-16T03:55:25.132Z",
+  "summary": "Most requested booking-flow functionality appears implemented: /tours is gated by RequireAuth, booking creation includes contact+notes persisted in backend, confirmation modal uses snapshotted submitted values, React Query invalidation keeps the list fresh, and user-facing error text is shown on failure. However, due to truncation, some acceptance-criteria details (especially around the stored-requests list contents and confirmation modal close behavior) cannot be fully verified from the provided diff summary.",
   "missing_requirements": [
     {
-      "id": "REQ-1",
-      "requirement": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
-      "reason": "The homepage hero image reference was updated to the new file path, but the diff shows no added asset file; requirement explicitly includes adding the uploaded image as a static frontend asset.",
+      "id": "REQ-2",
+      "requirement": "Closing the confirmation modal hides it and leaves the page in a ready state for another booking request.",
+      "reason": "The diff shows the confirmation modal component accepts an onClose handler, but the implementation of the close button’s handler and the parent’s onClose behavior/state reset is not fully visible due to truncation, so the AC cannot be confirmed from the provided evidence.",
       "evidence": [
-        "File diff summary: \"Added: 0\"",
-        "frontend/src/pages/ClubhouseHomePage.tsx (img src=\"/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg\")"
+        "frontend/src/components/BookingConfirmation.tsx",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
       ]
     },
     {
-      "id": "REQ-2",
-      "requirement": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
-      "reason": "Background styling references the new image path and is applied via AppShell, but the diff shows no added asset file; requirement explicitly includes adding the uploaded image as a static frontend asset.",
+      "id": "REQ-5",
+      "requirement": "The list displays each request's requested date/time, submitted details/contact info, and status.",
+      "reason": "The diff summary indicates bookings are listed, but the provided snippet of ToursInterviewsBookingPage is truncated before the actual bookings list rendering. Backend includes a status field, but the UI’s display of status/date-time/details/contact cannot be verified from the visible code.",
       "evidence": [
-        "File diff summary: \"Added: 0\"",
-        "frontend/src/index.css (background-image: url('/assets/generated/colorful-handprints-bg.dim_2048x2048.png'))",
-        "frontend/src/components/AppShell.tsx (className includes \"app-with-handprints-bg\")"
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "If there are no bookings, the page does not show an empty list block (or shows a clear empty state message).",
+      "reason": "The file summary claims an empty state exists, but the actual rendering logic for the empty state is not present in the truncated code snippet, so it cannot be confirmed strictly from the diff evidence.",
+      "evidence": [
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+        "frontend-file-summaries.txt"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Global theme/palette changes (\"Warm sunny palette\") beyond the requested hero/background image swap.",
-      "reason": "The BuildRequest is for frontend-only asset/styling changes specific to hero image and background; it does not request a broader color system overhaul.",
+      "description": "User profile management endpoints (get/save user profiles) added to backend.",
+      "reason": "BuildRequest focuses on tour/interview booking flow; it does not request adding or changing user profile storage APIs.",
       "evidence": [
-        "frontend/src/index.css (multiple CSS variables changed for background/foreground/card/primary/secondary/accent, etc.)"
+        "backend/main.mo"
       ]
     },
     {
-      "description": "New custom utility styles for \"bubble\" containers and borders not explicitly requested.",
-      "reason": "REQ-1/REQ-2 focus on images (hero + background) and readability; adding new generic component styling utilities is not requested.",
+      "description": "Backend data migration module for booking schema changes (backend/migration.mo) and wiring migration into the actor.",
+      "reason": "BuildRequest does not request a migration system; it only requests booking flow and persistence changes.",
       "evidence": [
-        "frontend/src/index.css (@layer utilities: .bubble-container, .bubble-sm)"
+        "backend/migration.mo",
+        "backend/main.mo"
       ]
     },
     {
-      "description": "Navigation/header styling changes (bubble-styled links, sticky header visual changes) not requested.",
-      "reason": "Non-goals specify not changing routing/navigation labels beyond what is necessary to place new images; while labels appear unchanged, substantial nav styling changes are outside the stated scope.",
+      "description": "UI/UX rework across the app (global styling, bubble UI components, decorative stickers/animations, header/nav changes, home page CTA, parent portal styling, status widgets).",
+      "reason": "BuildRequest is specifically about the tours/interviews booking flow requirements and constraints; broad UI redesign and additional portal widgets are not requested.",
       "evidence": [
-        "frontend/src/components/AppShell.tsx (header/nav link classes changed; sticky header with backdrop blur, shadows, rounded buttons)"
+        "frontend-file-summaries.txt",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js",
+        "frontend/src/components/AppShell.tsx",
+        "frontend/src/pages/ClubhouseHomePage.tsx",
+        "frontend/src/pages/ParentPortalPage.tsx",
+        "frontend/src/components/StatusWidgets.tsx",
+        "frontend/src/hooks/useParentPortalStatus.ts"
       ]
     }
   ],
-  "confidence": 0.74,
+  "confidence": 0.62,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/components/AppShell.tsx",
-    "frontend/src/index.css",
-    "frontend/src/pages/ClubhouseHomePage.tsx",
+    "frontend/src/App.tsx",
+    "frontend/src/components/BookingConfirmation.tsx",
+    "frontend/src/hooks/useBookingRequests.ts",
+    "frontend/src/pages/ToursInterviewsBookingPage.tsx",
     "project_state.json"
   ]
 }

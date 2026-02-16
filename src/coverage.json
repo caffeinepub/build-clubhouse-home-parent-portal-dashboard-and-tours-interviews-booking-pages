@@ -1,56 +1,93 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-16T03:10:23.767Z",
+  "generatedAt": "2026-02-16T03:55:25.135Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 5,
+    "implemented": 5,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
+        "summary": "Require Internet Identity sign-in for the Tours/Interviews booking page so that booking submission and viewing stored requests cannot fail silently due to missing authorization.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg",
-          "frontend/src/pages/ClubhouseHomePage.tsx"
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg",
-          "frontend/src/pages/ClubhouseHomePage.tsx"
+          "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
+        "summary": "Fix the booking confirmation modal so it reliably appears after a successful submission and displays the correct submitted date/time, details, and booking ID.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png",
-          "frontend/src/index.css",
-          "frontend/src/components/AppShell.tsx"
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "frontend/src/components/BookingConfirmation.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png",
-          "frontend/src/index.css",
-          "frontend/src/components/AppShell.tsx"
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "frontend/src/components/BookingConfirmation.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add a simple booking details form that collects parent contact information (name and email at minimum) along with optional notes, and ensure the submitted information is persisted with the booking request.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "frontend/src/hooks/useBookingRequests.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "frontend/src/hooks/useBookingRequests.ts"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Provide clear user-facing error feedback if booking submission fails (e.g., network/authorization issues), instead of only logging to the console.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Ensure submitted bookings are stored and viewable from the UI by listing the signed-in user's tour requests on the /tours page and keeping the list up-to-date after creating a new request.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBookingRequests.ts",
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBookingRequests.ts",
+          "frontend/src/pages/ToursInterviewsBookingPage.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png",
-    "frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg",
-    "frontend/src/components/AppShell.tsx",
-    "frontend/src/index.css",
-    "frontend/src/pages/ClubhouseHomePage.tsx",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/BookingConfirmation.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useBookingRequests.ts",
+    "frontend/src/pages/ToursInterviewsBookingPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -8,6 +8,16 @@ export interface None {
 }
 export type Option<T> = Some<T> | None;
 export type Time = bigint;
+export interface BookingInput {
+    contact: ParentContact;
+    notes: string;
+    details: string;
+    requestedTime: Time;
+}
+export interface ParentContact {
+    name: string;
+    email: string;
+}
 export interface UserProfile {
     name: string;
     email: string;
@@ -16,6 +26,8 @@ export interface UserProfile {
 export interface Request {
     id: bigint;
     status: Status;
+    contact: ParentContact;
+    notes: string;
     timestamp: Time;
     details: string;
     requestedTime: Time;
@@ -34,7 +46,7 @@ export enum UserRole {
 }
 export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
-    createBookingRequest(requestedTime: Time, details: string): Promise<bigint>;
+    createBookingRequest(input: BookingInput): Promise<bigint>;
     getBookingById(id: bigint): Promise<Request>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;

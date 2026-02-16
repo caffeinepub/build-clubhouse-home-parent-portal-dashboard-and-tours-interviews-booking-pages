@@ -29,13 +29,13 @@ export default function ClubhouseHomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-secondary/30 via-accent/20 to-primary/10">
         <div className="absolute top-10 left-10 animate-float">
-          <PlaygroundDecor type="stars" size="md" />
+          <PlaygroundDecor type="child-heart" size="md" />
         </div>
         <div className="absolute bottom-20 right-20 animate-float" style={{ animationDelay: '1s' }}>
           <PlaygroundDecor type="butterflies" size="lg" />
         </div>
         <div className="absolute top-1/2 right-10 animate-wiggle" style={{ animationDelay: '0.5s' }}>
-          <PlaygroundDecor type="stars" size="sm" />
+          <PlaygroundDecor type="child-heart" size="sm" />
         </div>
 
         <div className="container py-20 md:py-32 relative z-10">
@@ -70,9 +70,6 @@ export default function ClubhouseHomePage() {
                   alt="Auntie Maia's Cool Kidz Club"
                   className="w-full h-auto object-cover"
                 />
-              </div>
-              <div className="absolute -bottom-6 -right-6 animate-bounce">
-                <PlaygroundDecor type="butterflies" size="md" />
               </div>
             </div>
           </div>
@@ -114,7 +111,7 @@ export default function ClubhouseHomePage() {
       <section className="container py-20">
         <BubbleCard size="lg" className="text-center bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/20 relative overflow-hidden">
           <div className="absolute top-4 left-4">
-            <PlaygroundDecor type="stars" size="sm" />
+            <PlaygroundDecor type="child-heart" size="sm" />
           </div>
           <div className="absolute bottom-4 right-4">
             <PlaygroundDecor type="butterflies" size="sm" />

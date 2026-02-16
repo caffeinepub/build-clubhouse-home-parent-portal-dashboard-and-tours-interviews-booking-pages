@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-the-uploaded-cool-kidz-club-image-as-a-static-frontend-asset-and-use-it-as-the-hero-image-on-the-clubhouse-home-page-replacing-the-current-hero-image",
-      "featureTitle": "Add the uploaded “Cool Kidz Club” image as a static frontend asset and use it as the hero image on the Clubhouse home page (replacing the current hero image).",
+      "featureId": "feature-require-internet-identity-sign-in-for-the-tours-interviews-booking-page-so-that-booking-submission-and-viewing-stored-requests-cannot-fail-silently-due-to-missing-authorization",
+      "featureTitle": "Require Internet Identity sign-in for the Tours/Interviews booking page so that booking submission and viewing stored requests cannot fail silently due to missing authorization.",
       "files": [
-        "frontend/src/pages/ClubhouseHomePage.tsx"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -21,11 +21,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-the-uploaded-colorful-handprints-image-as-a-static-frontend-asset-and-apply-it-as-the-background-across-the-app-at-least-for-the-main-app-shell-pages-ensuring-foreground-content-remains-readable",
-      "featureTitle": "Add the uploaded “colorful handprints” image as a static frontend asset and apply it as the background across the app (at least for the main app shell/pages), ensuring foreground content remains readable.",
+      "featureId": "feature-fix-the-booking-confirmation-modal-so-it-reliably-appears-after-a-successful-submission-and-displays-the-correct-submitted-date-time-details-and-booking-id",
+      "featureTitle": "Fix the booking confirmation modal so it reliably appears after a successful submission and displays the correct submitted date/time, details, and booking ID.",
       "files": [
-        "frontend/src/components/AppShell.tsx",
-        "frontend/src/index.css"
+        "frontend/src/components/BookingConfirmation.tsx",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -37,6 +37,65 @@
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-simple-booking-details-form-that-collects-parent-contact-information-name-and-email-at-minimum-along-with-optional-notes-and-ensure-the-submitted-information-is-persisted-with-the-booking-request",
+      "featureTitle": "Add a simple booking details form that collects parent contact information (name and email at minimum) along with optional notes, and ensure the submitted information is persisted with the booking request.",
+      "files": [
+        "frontend/src/hooks/useBookingRequests.ts",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-clear-user-facing-error-feedback-if-booking-submission-fails-e-g-network-authorization-issues-instead-of-only-logging-to-the-console",
+      "featureTitle": "Provide clear user-facing error feedback if booking submission fails (e.g., network/authorization issues), instead of only logging to the console.",
+      "files": [
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-submitted-bookings-are-stored-and-viewable-from-the-ui-by-listing-the-signed-in-user-s-tour-requests-on-the-tours-page-and-keeping-the-list-up-to-date-after-creating-a-new-request",
+      "featureTitle": "Ensure submitted bookings are stored and viewable from the UI by listing the signed-in user's tour requests on the /tours page and keeping the list up-to-date after creating a new request.",
+      "files": [
+        "frontend/src/hooks/useBookingRequests.ts",
+        "frontend/src/pages/ToursInterviewsBookingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
       ],
       "confidence": "high"
     }

@@ -90,6 +90,16 @@ export class ExternalBlob {
     }
 }
 export type Time = bigint;
+export interface BookingInput {
+    contact: ParentContact;
+    notes: string;
+    details: string;
+    requestedTime: Time;
+}
+export interface ParentContact {
+    name: string;
+    email: string;
+}
 export interface UserProfile {
     name: string;
     email: string;
@@ -98,6 +108,8 @@ export interface UserProfile {
 export interface Request {
     id: bigint;
     status: Status;
+    contact: ParentContact;
+    notes: string;
     timestamp: Time;
     details: string;
     requestedTime: Time;
@@ -117,7 +129,7 @@ export enum UserRole {
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
-    createBookingRequest(requestedTime: Time, details: string): Promise<bigint>;
+    createBookingRequest(input: BookingInput): Promise<bigint>;
     getBookingById(id: bigint): Promise<Request>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
@@ -127,7 +139,7 @@ export interface backendInterface {
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     updateBookingStatus(id: bigint, status: Status): Promise<void>;
 }
-import type { Request as _Request, Status as _Status, Time as _Time, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { ParentContact as _ParentContact, Request as _Request, Status as _Status, Time as _Time, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -158,17 +170,17 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async createBookingRequest(arg0: Time, arg1: string): Promise<bigint> {
+    async createBookingRequest(arg0: BookingInput): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.createBookingRequest(arg0, arg1);
+                const result = await this.actor.createBookingRequest(arg0);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.createBookingRequest(arg0, arg1);
+            const result = await this.actor.createBookingRequest(arg0);
             return result;
         }
     }
@@ -300,6 +312,8 @@ function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Ar
 function from_candid_record_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: bigint;
     status: _Status;
+    contact: _ParentContact;
+    notes: string;
     timestamp: _Time;
     details: string;
     requestedTime: _Time;
@@ -307,6 +321,8 @@ function from_candid_record_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint
 }): {
     id: bigint;
     status: Status;
+    contact: ParentContact;
+    notes: string;
     timestamp: Time;
     details: string;
     requestedTime: Time;
@@ -315,6 +331,8 @@ function from_candid_record_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint
     return {
         id: value.id,
         status: from_candid_Status_n5(_uploadFile, _downloadFile, value.status),
+        contact: value.contact,
+        notes: value.notes,
         timestamp: value.timestamp,
         details: value.details,
         requestedTime: value.requestedTime,

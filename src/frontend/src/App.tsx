@@ -3,6 +3,7 @@ import AppShell from './components/AppShell';
 import ClubhouseHomePage from './pages/ClubhouseHomePage';
 import ParentPortalPage from './pages/ParentPortalPage';
 import ToursInterviewsBookingPage from './pages/ToursInterviewsBookingPage';
+import RequireAuth from './components/RequireAuth';
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -27,7 +28,11 @@ const parentPortalRoute = createRoute({
 const toursRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/tours',
-  component: ToursInterviewsBookingPage,
+  component: () => (
+    <RequireAuth>
+      <ToursInterviewsBookingPage />
+    </RequireAuth>
+  ),
 });
 
 const routeTree = rootRoute.addChildren([indexRoute, parentPortalRoute, toursRoute]);

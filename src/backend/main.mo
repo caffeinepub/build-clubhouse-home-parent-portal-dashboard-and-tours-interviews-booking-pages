@@ -5,7 +5,9 @@ import Time "mo:core/Time";
 import Runtime "mo:core/Runtime";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
+import Migration "migration";
 
+(with migration = Migration.run)
 actor {
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
@@ -49,6 +51,11 @@ actor {
       #completed;
     };
 
+    public type ParentContact = {
+      name : Text;
+      email : Text;
+    };
+
     public type Request = {
       id : Nat;
       parent : Principal;
@@ -56,6 +63,8 @@ actor {
       requestedTime : Time.Time;
       status : Status;
       details : Text;
+      contact : ParentContact;
+      notes : Text;
     };
 
     public func compare(a : Request, b : Request) : { #less; #equal; #greater } {
@@ -72,7 +81,14 @@ actor {
   var nextBookingId = 0;
   let bookings = Map.empty<Nat, Booking.Request>();
 
-  public shared ({ caller }) func createBookingRequest(requestedTime : Time.Time, details : Text) : async Nat {
+  public type BookingInput = {
+    requestedTime : Time.Time;
+    details : Text;
+    contact : Booking.ParentContact;
+    notes : Text;
+  };
+
+  public shared ({ caller }) func createBookingRequest(input : BookingInput) : async Nat {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can create bookings");
     };
@@ -81,9 +97,11 @@ actor {
       id = nextBookingId;
       parent = caller;
       timestamp = Time.now();
-      requestedTime;
+      requestedTime = input.requestedTime;
       status = #pending;
-      details;
+      details = input.details;
+      contact = input.contact;
+      notes = input.notes;
     };
 
     bookings.add(nextBookingId, booking);
@@ -97,8 +115,7 @@ actor {
     };
 
     let isAdmin = AccessControl.isAdmin(accessControlState, caller);
-    
-    // Admins see all bookings, parents see only their own
+
     let filteredBookings = if (isAdmin) {
       bookings.values().toArray();
     } else {
@@ -116,9 +133,8 @@ actor {
     };
 
     switch (bookings.get(id)) {
-      case (null) { Runtime.trap("Booking not found"); };
+      case (null) { Runtime.trap("Booking not found") };
       case (?booking) {
-        // Verify ownership: only the parent who created the booking or an admin can view it
         if (booking.parent != caller and not AccessControl.isAdmin(accessControlState, caller)) {
           Runtime.trap("Unauthorized: Can only view your own bookings");
         };
@@ -135,10 +151,7 @@ actor {
     switch (bookings.get(id)) {
       case (null) { Runtime.trap("Booking not found") };
       case (?booking) {
-        let updatedBooking = {
-          booking with
-          status
-        };
+        let updatedBooking = { booking with status };
         bookings.add(id, updatedBooking);
       };
     };

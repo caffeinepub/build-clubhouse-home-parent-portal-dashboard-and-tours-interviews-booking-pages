@@ -18,16 +18,22 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="min-h-screen flex flex-col app-with-handprints-bg">
+      {/* Image-only sticky header */}
       <header className="sticky top-0 z-50 w-full border-b-4 border-primary/20 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-bubble">
-        <div className="container flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <Heart className="w-6 h-6 text-primary-foreground fill-current" />
-            </div>
-            <span className="text-2xl font-display font-bold text-primary">Auntie Maia's Clubhouse</span>
-          </Link>
-          
-          <nav className="hidden md:flex items-center space-x-2">
+        <div className="w-full h-24 md:h-32 overflow-hidden">
+          <img 
+            src="/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg" 
+            alt="Cool Kids Club" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </header>
+
+      {/* Navigation bar below header */}
+      <nav className="sticky top-24 md:top-32 z-40 w-full border-b-2 border-primary/10 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
+        <div className="container py-3">
+          {/* Desktop navigation */}
+          <div className="hidden md:flex items-center justify-center space-x-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = currentPath === link.path;
@@ -35,7 +41,7 @@ export default function AppShell({ children }: AppShellProps) {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-full font-medium transition-all text-sm ${
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-lg scale-105'
                       : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary hover:scale-105'
@@ -46,9 +52,10 @@ export default function AppShell({ children }: AppShellProps) {
                 </Link>
               );
             })}
-          </nav>
+          </div>
 
-          <nav className="flex md:hidden items-center space-x-1">
+          {/* Mobile navigation */}
+          <div className="flex md:hidden items-center justify-center space-x-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = currentPath === link.path;
@@ -56,19 +63,20 @@ export default function AppShell({ children }: AppShellProps) {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`p-3 rounded-full transition-all ${
+                  className={`flex items-center space-x-1 px-3 py-2 rounded-full transition-all text-xs ${
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-lg'
                       : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-4 h-4" />
+                  <span>{link.label}</span>
                 </Link>
               );
             })}
-          </nav>
+          </div>
         </div>
-      </header>
+      </nav>
 
       <main className="flex-1">
         {children}

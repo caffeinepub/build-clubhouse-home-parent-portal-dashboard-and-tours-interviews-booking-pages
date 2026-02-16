@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { Request } from '../backend';
+import type { Request, BookingInput } from '../backend';
 
 export function useCreateBooking() {
   const { actor } = useActor();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ requestedTime, details }: { requestedTime: bigint; details: string }) => {
+    mutationFn: async (input: BookingInput) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.createBookingRequest(requestedTime, details);
+      return actor.createBookingRequest(input);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });

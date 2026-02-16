@@ -1,52 +1,98 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update Clubhouse hero image and apply colorful handprints app background",
+  "title": "Tours/Interviews booking: auth-gated page, reliable confirmation, contact form, errors, and request listing",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Replace the Clubhouse home page hero image with the new static “Cool Kidz Club” artwork asset while keeping it responsive inside the rounded container.",
+      "summary": "Require Internet Identity sign-in for /tours by gating the booking page behind the existing RequireAuth/AuthPanel.",
       "acceptanceCriteria": [
-        "The homepage hero image on the Clubhouse home page displays the new “Cool Kidz Club” artwork instead of the current /assets/generated/clubhouse-hero-sunny-park.dim_1600x900.png image.",
-        "The hero image is loaded from a static file in the frontend (not via backend).",
-        "The hero image remains responsive and does not overflow its rounded container."
+        "Navigating to /tours while signed out shows the existing AuthPanel (via RequireAuth) instead of the booking UI.",
+        "When signed in, the booking UI is available and booking submission calls the backend successfully (no authorization trap)."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg",
-          "operation": "create",
-          "description": "Add the converted/cropped wide hero asset for the uploaded “Cool Kidz Club” artwork as a static public asset (per imageRequirements edit output filename)."
-        },
-        {
-          "path": "frontend/src/pages/ClubhouseHomePage.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Update the hero <img> source to use the new static asset at frontend/public/assets/generated/cool-kidz-club-hero.dim_1600x900.jpg, replacing the prior generated sunny-park hero; ensure image sizing uses container-safe responsive styles (e.g., cover/contain as appropriate) so it does not overflow the rounded/overflow-hidden hero frame."
+          "description": "Wrap the /tours route component with RequireAuth so signed-out users see AuthPanel and cannot access booking/listing UI until authenticated (per the authorization component guidance). Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add the static “colorful handprints” image and apply it as the app-wide background (main shell/pages) with an overlay so foreground content remains readable and performance stays smooth.",
+      "summary": "Make the booking confirmation modal reliably show after success with the correct submitted values (date/time, details, booking ID) and be closable to reset to a ready state.",
       "acceptanceCriteria": [
-        "All primary pages (Home, Parent Portal, Tours) show the colorful handprints background behind the main content.",
-        "Text, buttons, and BubbleCard content maintain good readability over the background (e.g., via opacity/overlay or other styling adjustments).",
-        "Background rendering performs well (no obvious jank) and scales appropriately on mobile and desktop."
+        "After a successful booking submission, a confirmation modal is displayed without requiring any additional user action.",
+        "The modal shows the submitted date/time (not cleared/undefined), the submitted details, and the returned booking ID.",
+        "Closing the modal hides it and leaves the page in a ready state for another booking request."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png",
-          "operation": "create",
-          "description": "Add the background-ready “colorful handprints” static asset (per imageRequirements edit output filename) under public generated assets for fast loading and caching."
+          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "operation": "modify",
+          "description": "Refactor submission state to snapshot submitted values (submittedDate/submittedDetails/submittedContact/submittedNotes/submittedBookingId) before clearing form inputs, and render BookingConfirmation from the snapshot so it never depends on cleared state."
         },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/BookingConfirmation.tsx",
           "operation": "modify",
-          "description": "Introduce app-wide background styling that uses frontend/public/assets/generated/colorful-handprints-bg.dim_2048x2048.png behind content with a readability-preserving overlay (e.g., layered backgrounds or a semi-transparent wash) and mobile/desktop-friendly scaling/repeat behavior; keep changes in this existing global stylesheet entry point."
+          "description": "Update BookingConfirmation props and rendering to display the submitted date/time, submitted details, and booking ID from the post-submit snapshot (not from live form state), and ensure close action hides modal cleanly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add parent contact fields (name, email) and optional notes to the booking form, and submit them in the booking request payload.",
+      "acceptanceCriteria": [
+        "The /tours page includes inputs for parent name and parent email, plus the existing free-text notes field.",
+        "The submit button is disabled until required fields (date/time, name, email) are provided.",
+        "The backend persists the collected information with the booking request such that it is visible when listing bookings (e.g., in the 'Your Tour Requests' list)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "operation": "modify",
+          "description": "Add controlled inputs for parent name and parent email (required) plus an optional notes textarea (keep existing free-text field as notes or clearly separate notes vs details), validate required fields, and disable submit until date/time + name + email are present."
         },
         {
-          "path": "frontend/src/components/AppShell.tsx",
+          "path": "frontend/src/hooks/useBookingRequests.ts",
           "operation": "modify",
-          "description": "Apply a wrapper class/structure on the main app shell container to render the handprints background behind all routed pages (Home, Parent Portal, Tours) while keeping the header/footer and main content readable (e.g., by enabling the global overlay/background styles via className)."
+          "description": "Update useCreateBooking to call the backend using the BookingInput shape (requestedTime, details, notes, contact{name,email}) as defined in frontend/src/backend.d.ts, and adjust types accordingly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Show clear user-facing error feedback on booking submission failures and keep the pending/loading state preventing duplicates.",
+      "acceptanceCriteria": [
+        "If booking submission fails, the UI displays an English error message on the page (or in a modal/alert area) explaining that the request could not be submitted.",
+        "While submission is pending, the existing loading state remains visible and prevents duplicate submissions."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "operation": "modify",
+          "description": "Add an on-page error message area for submission failures (including authorization/network errors) and clear the error on new attempts; keep the existing pending state to disable the submit button and prevent duplicate submissions (handle errors per authorization component guidance). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "List the signed-in user's stored tour requests on /tours and refresh the list after new submissions with a clear empty state when none exist.",
+      "acceptanceCriteria": [
+        "After submitting a booking, the stored requests list updates to include the new request without a full page reload.",
+        "The list displays each request's requested date/time, submitted details/contact info, and status.",
+        "If there are no bookings, the page does not show an empty list block (or shows a clear empty state message)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBookingRequests.ts",
+          "operation": "modify",
+          "description": "Update listing logic to support 'my bookings' behavior for the UI (e.g., filter results to the signed-in principal when appropriate) and ensure the react-query cache invalidation/refetch keeps the list up-to-date after create."
+        },
+        {
+          "path": "frontend/src/pages/ToursInterviewsBookingPage.tsx",
+          "operation": "modify",
+          "description": "Render a 'Your Tour Requests' section that shows requested date/time, status, and submitted contact info + details/notes; add a clear empty state when there are no bookings; ensure the list updates immediately after successful creation via query invalidation."
         }
       ]
     }
